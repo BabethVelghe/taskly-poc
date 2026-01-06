@@ -26,7 +26,12 @@
     },
       "[production]": {
       "auth": "xsuaa",
-      "db": "hana",
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": ":memory:"
+        }
+      },
       "multitenancy": true,
       "destinations": true,
       "html5-repo": true
