@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "TaskMaster - CAP Project Management POC with Public & Admin Services (Multitenant)",
   "dependencies": {
-    "@cap-js/hana": "^2",
-    "@cap-js/sqlite": "^2",
+    "@cap-js/sqlite": "^2.0.3",
     "@sap/ams": "^3",
     "@sap/cds": "^9",
     "@sap/cds-mtxs": "^3",

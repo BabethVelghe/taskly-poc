@@ -1,10 +1,7 @@
 {
-    "profile": "with-mtx-sidecar",
-    "requires": {
-      "db": {
-        "kind": "sql"
-      },
-      "[local-multitenancy]": {
+  "profile": "with-mtx-sidecar",
+  "requires": {
+    "[local-multitenancy]": {
       "multitenancy": true,
       "auth": {
         "kind": "mocked",
@@ -12,7 +9,11 @@
           "alice": {
             "id": "alice@company.com",
             "tenant": "t1",
-            "roles": ["ProjectManager", "cds.Subscriber", "internal-user"]
+            "roles": [
+              "ProjectManager",
+              "cds.Subscriber",
+              "internal-user"
+            ]
           }
         }
       },
@@ -24,8 +25,18 @@
         "schema_evolution": "auto"
       }
     },
-      "[production]": {
-      "auth": "xsuaa",
+    "[with-mtx]": {
+      "multitenancy": true,
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": ":memory:"
+        },
+        "impl": "@cap-js/sqlite"
+      }
+    },
+    "[production]": {
+      "auth": "ias",
       "db": {
         "kind": "sqlite",
         "credentials": {
@@ -33,9 +44,9 @@
         },
         "impl": "@cap-js/sqlite"
       },
-      "multitenancy": true,
       "destinations": true,
-      "html5-repo": true
-    }
+      "html5-repo": true,
+      "multitenancy": true
     }
   }
+}
