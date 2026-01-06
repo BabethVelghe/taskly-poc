@@ -69,6 +69,7 @@ modules:
       memory: 256M
     properties:
       TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+      IAS_DEPENDENCY_NAME: taskly-poc-auth
     provides:
       - name: app-api
         properties:
@@ -85,7 +86,6 @@ modules:
             credential-type: X509_GENERATED
             app-identifier: mtx
       - name: taskly-poc-db
-      - name: taskly-poc-sms
       - name: app-api
         properties:
           SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
@@ -123,29 +123,6 @@ modules:
           config:
             credential-type: X509_GENERATED
             app-identifier: ams-policy-deployer
-
-  - name: taskly-poc-app-deployer
-    type: com.sap.application.content
-    path: gen
-    requires:
-      - name: taskly-poc-auth
-        parameters:
-          config:
-            credential-type: X509_GENERATED
-            app-identifier: app-deployer
-      - name: srv-api
-      - name: taskly-poc-html5-repo-host
-        parameters:
-          content-target: true
-          config:
-            HTML5Runtime_enabled: true
-            IASDependencyName: taskly-poc-api
-    build-parameters:
-      build-result: app/
-      requires:
-
-
-
 resources:
   - name: taskly-poc-auth
     type: org.cloudfoundry.managed-service
@@ -167,7 +144,7 @@ resources:
             - ~{app-api/app-protocol}://*.~{app-api/app-uri}/*/logout.html
         authorization:
           enabled: true
-        multi-tenant: true
+        multi-tenant: false
         xsuaa-cross-consumption: true
   - name: taskly-poc-db
     type: org.cloudfoundry.managed-service
@@ -175,31 +152,6 @@ resources:
       service: service-manager
       service-plan: container
 
-  - name: taskly-poc-sms
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: subscription-manager
-      service-plan: provider
-      config:
-        applicationType: application
-        appName: taskly-poc-${org}-${space}
-        appCallbacks:
-          dependenciesCallbacks:
-            url: ~{mtx-api/mtx-cert-url}/-/cds/sms-provisioning/dependencies
-          subscriptionCallbacks:
-            url: ~{mtx-api/mtx-cert-url}/-/cds/sms-provisioning/tenant/{app_tid}
-            async:
-              subscribeEnable: true
-              unSubscribeEnable: true
-              timeoutInMillis: 300000 # Increase if your deployments are taking longer than that
-        displayName: taskly-poc
-        description: Description for taskly-poc
-        category: Category
-        iasServiceInstanceName: taskly-poc-auth
-    requires:
-      - name: mtx-api
-    processed-after:
-      - taskly-poc-auth
   - name: taskly-poc-destination
     type: org.cloudfoundry.managed-service
     parameters:

@@ -11,7 +11,7 @@
     {
       "source": "^/admin/(.*)$",
       "destination": "srv-api",
-      "authenticationType": "xsuaa",
+      "authenticationType": "ias",
       "csrfProtection": true
     },
     {
@@ -22,12 +22,12 @@
     {
       "source": "^/mtx/(.*)$",
       "destination": "mtx-api",
-      "authenticationType": "xsuaa"
+      "authenticationType": "ias"
     },
     {
       "source": "^/(.*)$",
       "destination": "srv-api",
-      "authenticationType": "xsuaa"
+      "authenticationType": "ias"
     }
   ],
   "logout": {
