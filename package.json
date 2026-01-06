@@ -35,43 +35,5 @@
   "private": true,
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
-  },
-  "cds": {
-    "typer": {
-      "build_tasks": [
-        {
-          "src": ".",
-          "dest": "@cds-models"
-        }
-      ]
-    },
-    "requires": {
-      "[production]": {
-        "auth": "ias",
-        "db": {
-          "kind": "sqlite",
-          "credentials": {
-            "url": ":memory:"
-          },
-          "impl": "@cap-js/sqlite"
-        }
-      }
-    },
-    "build": {
-      "tasks": [
-        {
-          "for": "nodejs",
-          "src": "srv"
-        },
-        {
-          "for": "mtx-sidecar",
-          "src": "mtx/sidecar"
-        },
-        {
-          "for": "ams",
-          "src": "srv"
-        }
-      ]
-    }
   }
 }

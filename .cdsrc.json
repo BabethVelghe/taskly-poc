@@ -30,7 +30,8 @@
         "kind": "sqlite",
         "credentials": {
           "url": ":memory:"
-        }
+        },
+        "impl": "@cap-js/sqlite"
       },
       "multitenancy": true,
       "destinations": true,
