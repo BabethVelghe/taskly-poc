@@ -1,0 +1,218 @@
+_schema-version: 3.3.0
+ID: taskly-poc
+version: 1.0.0
+description: "TaskMaster - CAP Project Management POC with Public &amp; Admin Services (Multitenant)"
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: taskly-poc-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+      routes:
+        - route: "${default-url}"
+        - route: "${default-host}.cert.${default-domain}"
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+          srv-cert-url: '${protocol}://${default-host}.cert.${default-domain}'
+    requires:
+      - name: taskly-poc-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: srv
+      - name: taskly-poc-db
+      - name: taskly-poc-destination
+    deployed-after:
+      - taskly-poc-ams-policies-deployer
+    properties:
+      AMS_DCL_ROOT: ams/dcl
+
+  - name: taskly-poc
+    type: approuter.nodejs
+    path: app/router
+    requires:
+      - name: taskly-poc-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: approuter
+      - name: srv-api
+        group: destinations
+        properties:
+          url: ~{srv-cert-url}
+          forwardAuthCertificates: true
+          strictSSL: true
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api # must be used in xs-app.json as well
+          url: ~{mtx-url}
+      - name: taskly-poc-destination
+      - name: taskly-poc-html5-runtime
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+  - name: taskly-poc-mtx
+    type: nodejs
+    path: gen/mtx/sidecar
+    requires:
+      - name: taskly-poc-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: mtx
+      - name: taskly-poc-db
+      - name: taskly-poc-sms
+      - name: app-api
+        properties:
+          SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
+      - name: taskly-poc-destination
+      - name: taskly-poc-html5-runtime
+    build-parameters:
+      builder: npm-ci
+    parameters:
+      instances: 1
+      memory: 256M
+      disk-quota: 512M
+      routes:
+        - route: "${default-url}"
+        - route: "${default-host}.cert.${default-domain}"
+    provides:
+      - name: mtx-api
+        properties:
+          mtx-url: ${default-url}
+          mtx-cert-url: ${protocol}://${default-host}.cert.${default-domain}
+
+  - name: taskly-poc-ams-policies-deployer
+    type: javascript.nodejs
+    path: gen/policies
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      tasks:
+        - name: deploy-dcl
+          command: npm start
+          memory: 512M
+    requires:
+      - name: taskly-poc-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: ams-policy-deployer
+
+  - name: taskly-poc-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: taskly-poc-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            app-identifier: app-deployer
+      - name: srv-api
+      - name: taskly-poc-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+            IASDependencyName: taskly-poc-api
+    build-parameters:
+      build-result: app/
+      requires:
+
+
+
+resources:
+  - name: taskly-poc-auth
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: app-api
+    parameters:
+      service: identity
+      service-name: taskly-poc-auth
+      service-plan: application
+      config:
+        display-name: taskly-poc
+        oauth2-configuration:
+          token-policy:
+            access-token-format: "jwt"
+          redirect-uris:
+            - ~{app-api/app-protocol}://*.~{app-api/app-uri}/login/callback
+            - ~{app-api/app-protocol}://~{app-api/app-uri}/login/callback
+          post-logout-redirect-uris:
+            - ~{app-api/app-protocol}://*.~{app-api/app-uri}/*/logout.html
+        authorization:
+          enabled: true
+        multi-tenant: true
+        xsuaa-cross-consumption: true
+  - name: taskly-poc-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: service-manager
+      service-plan: container
+
+  - name: taskly-poc-sms
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: subscription-manager
+      service-plan: provider
+      config:
+        applicationType: application
+        appName: taskly-poc-${org}-${space}
+        appCallbacks:
+          dependenciesCallbacks:
+            url: ~{mtx-api/mtx-cert-url}/-/cds/sms-provisioning/dependencies
+          subscriptionCallbacks:
+            url: ~{mtx-api/mtx-cert-url}/-/cds/sms-provisioning/tenant/{app_tid}
+            async:
+              subscribeEnable: true
+              unSubscribeEnable: true
+              timeoutInMillis: 300000 # Increase if your deployments are taking longer than that
+        displayName: taskly-poc
+        description: Description for taskly-poc
+        category: Category
+        iasServiceInstanceName: taskly-poc-auth
+    requires:
+      - name: mtx-api
+    processed-after:
+      - taskly-poc-auth
+  - name: taskly-poc-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+  - name: taskly-poc-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: taskly-poc-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime

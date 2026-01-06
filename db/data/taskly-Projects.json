@@ -1,0 +1,42 @@
+[
+  {
+    "ID": "11111111-1111-1111-1111-111111111111",
+    "name": "E-Commerce Platform Redesign",
+    "description": "Complete redesign of the customer-facing e-commerce platform with improved UX and performance",
+    "status": "ACTIVE",
+    "budget": 150000.00,
+    "actualCost": 45000.00,
+    "startDate": "2024-01-15",
+    "endDate": "2025-06-30"
+  },
+  {
+    "ID": "22222222-2222-2222-2222-222222222222",
+    "name": "Mobile App Development",
+    "description": "Native mobile application for iOS and Android platforms",
+    "status": "PLANNING",
+    "budget": 200000.00,
+    "actualCost": 5000.00,
+    "startDate": "2025-02-01",
+    "endDate": "2025-12-31"
+  },
+  {
+    "ID": "33333333-3333-3333-3333-333333333333",
+    "name": "API Integration Layer",
+    "description": "Build unified API gateway for third-party integrations",
+    "status": "ACTIVE",
+    "budget": 80000.00,
+    "actualCost": 60000.00,
+    "startDate": "2024-11-01",
+    "endDate": "2025-03-31"
+  },
+  {
+    "ID": "44444444-4444-4444-4444-444444444444",
+    "name": "Data Migration Project",
+    "description": "Migrate legacy data to new cloud-based infrastructure",
+    "status": "COMPLETED",
+    "budget": 120000.00,
+    "actualCost": 115000.00,
+    "startDate": "2024-06-01",
+    "endDate": "2024-11-30"
+  }
+]

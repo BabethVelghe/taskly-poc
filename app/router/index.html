@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Project Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: '72', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .services {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .service-card {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .service-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+        .badge.public {
+            background: #28a745;
+        }
+        .features {
+            margin-top: 40px;
+            text-align: left;
+        }
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            padding: 10px 0;
+            color: #666;
+        }
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        .mt-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mt-badge">🌐 Multitenant SaaS Application</div>
+        <h1>TaskMaster</h1>
+        <p class="subtitle">Modern Project & Task Management Platform</p>
+        
+        <div class="services">
+            <a href="/public/Projects" class="service-card">
+                <h2>Public Service</h2>
+                <p>Browse projects and tasks without authentication. View-only access to all public data.</p>
+                <span class="badge public">No Auth Required</span>
+            </a>
+            
+            <a href="/admin/Projects" class="service-card">
+                <h2>Admin Service</h2>
+                <p>Full CRUD operations with role-based access control. Manage projects, tasks, and team members.</p>
+                <span class="badge">Auth Required</span>
+            </a>
+        </div>
+
+        <div class="features">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #667eea;">Key Features</h3>
+            <ul>
+                <li>Multitenant architecture with tenant isolation</li>
+                <li>Role-based authorization (ProjectManager, ProjectViewer, TaskAssignee)</li>
+                <li>Real-time calculated fields (completion rates, budgets, overdue status)</li>
+                <li>Custom actions (completeTask, assignTask, updateBudget)</li>
+                <li>RESTful OData V4 API</li>
+                <li>SAP HANA Cloud with HDI containers per tenant</li>
+                <li>Built with SAP Cloud Application Programming Model (CAP)</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Powered by SAP CAP | Deployed on SAP BTP Cloud Foundry</p>
+            <p style="margin-top: 10px;">
+                <a href="/-/cds" style="color: #667eea; text-decoration: none;">API Explorer</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

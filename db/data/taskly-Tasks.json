@@ -1,0 +1,133 @@
+[
+  {
+    "ID": "t1111111-1111-1111-1111-111111111111",
+    "title": "Design new homepage layout",
+    "description": "Create wireframes and mockups for the new homepage design",
+    "priority": "HIGH",
+    "status": "DONE",
+    "estimatedHours": 40,
+    "actualHours": 38,
+    "dueDate": "2024-12-15",
+    "completedAt": "2024-12-14T16:30:00Z",
+    "assignedTo": "Sarah Design",
+    "project_ID": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "ID": "t2222222-2222-2222-2222-222222222222",
+    "title": "Implement product catalog API",
+    "description": "Build RESTful API endpoints for product catalog management",
+    "priority": "CRITICAL",
+    "status": "IN_PROGRESS",
+    "estimatedHours": 60,
+    "actualHours": 35,
+    "dueDate": "2025-01-10",
+    "assignedTo": "John Backend",
+    "project_ID": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "ID": "t3333333-3333-3333-3333-333333333333",
+    "title": "Setup CI/CD pipeline",
+    "description": "Configure automated build and deployment pipeline",
+    "priority": "HIGH",
+    "status": "TODO",
+    "estimatedHours": 24,
+    "actualHours": 0,
+    "dueDate": "2025-01-20",
+    "assignedTo": "Mike DevOps",
+    "project_ID": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "ID": "t4444444-4444-4444-4444-444444444444",
+    "title": "Performance testing",
+    "description": "Conduct load testing and optimize performance bottlenecks",
+    "priority": "MEDIUM",
+    "status": "TODO",
+    "estimatedHours": 32,
+    "actualHours": 0,
+    "dueDate": "2025-06-15",
+    "project_ID": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "ID": "t5555555-5555-5555-5555-555555555555",
+    "title": "Research native frameworks",
+    "description": "Evaluate React Native vs Flutter for mobile development",
+    "priority": "CRITICAL",
+    "status": "IN_PROGRESS",
+    "estimatedHours": 20,
+    "actualHours": 15,
+    "dueDate": "2024-12-20",
+    "assignedTo": "Emma Mobile",
+    "project_ID": "22222222-2222-2222-2222-222222222222"
+  },
+  {
+    "ID": "t6666666-6666-6666-6666-666666666666",
+    "title": "Define app architecture",
+    "description": "Design overall mobile app architecture and tech stack",
+    "priority": "HIGH",
+    "status": "TODO",
+    "estimatedHours": 30,
+    "actualHours": 0,
+    "dueDate": "2025-02-15",
+    "project_ID": "22222222-2222-2222-2222-222222222222"
+  },
+  {
+    "ID": "t7777777-7777-7777-7777-777777777777",
+    "title": "Implement OAuth2 authentication",
+    "description": "Setup OAuth2 authentication flow for API gateway",
+    "priority": "CRITICAL",
+    "status": "IN_REVIEW",
+    "estimatedHours": 45,
+    "actualHours": 42,
+    "dueDate": "2025-01-05",
+    "assignedTo": "David Security",
+    "project_ID": "33333333-3333-3333-3333-333333333333"
+  },
+  {
+    "ID": "t8888888-8888-8888-8888-888888888888",
+    "title": "Configure rate limiting",
+    "description": "Implement rate limiting and throttling for API endpoints",
+    "priority": "HIGH",
+    "status": "TODO",
+    "estimatedHours": 16,
+    "actualHours": 0,
+    "dueDate": "2025-02-01",
+    "project_ID": "33333333-3333-3333-3333-333333333333"
+  },
+  {
+    "ID": "t9999999-9999-9999-9999-999999999999",
+    "title": "API documentation",
+    "description": "Create comprehensive API documentation using OpenAPI/Swagger",
+    "priority": "MEDIUM",
+    "status": "TODO",
+    "estimatedHours": 20,
+    "actualHours": 0,
+    "dueDate": "2025-03-15",
+    "project_ID": "33333333-3333-3333-3333-333333333333"
+  },
+  {
+    "ID": "taaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    "title": "Data validation script",
+    "description": "Validate all migrated data for consistency",
+    "priority": "HIGH",
+    "status": "DONE",
+    "estimatedHours": 50,
+    "actualHours": 52,
+    "dueDate": "2024-11-20",
+    "completedAt": "2024-11-22T10:00:00Z",
+    "assignedTo": "Lisa Data",
+    "project_ID": "44444444-4444-4444-4444-444444444444"
+  },
+  {
+    "ID": "tbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+    "title": "Final migration report",
+    "description": "Document migration process and lessons learned",
+    "priority": "LOW",
+    "status": "DONE",
+    "estimatedHours": 16,
+    "actualHours": 14,
+    "dueDate": "2024-11-30",
+    "completedAt": "2024-11-28T14:30:00Z",
+    "assignedTo": "Lisa Data",
+    "project_ID": "44444444-4444-4444-4444-444444444444"
+  }
+]

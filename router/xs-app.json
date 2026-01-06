@@ -1,0 +1,23 @@
+{
+  "welcomeFile": "/local/launchpad/flp.html",
+  "routes": [
+    {
+      "source": "^/local/launchpad/(.*)$",
+      "target": "$1",
+      "localDir": "./launchpad",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/-/cds/.*",
+      "destination": "mtx-api",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "destination": "srv-api",
+      "authenticationType": "none",
+      "csrfProtection": true
+    }
+  ]
+}

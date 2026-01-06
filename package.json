@@ -1,0 +1,77 @@
+{
+  "name": "taskly-poc",
+  "version": "1.0.0",
+  "description": "TaskMaster - CAP Project Management POC with Public & Admin Services (Multitenant)",
+  "dependencies": {
+    "@cap-js/hana": "^2",
+    "@cap-js/sqlite": "^2",
+    "@sap/ams": "^3",
+    "@sap/cds": "^9",
+    "@sap/cds-mtxs": "^3",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "rimraf": "^6.1.2"
+  },
+  "devDependencies": {
+    "@cap-js/cds-typer": ">=0.1",
+    "@cap-js/cds-types": "^0.14.0",
+    "@cap-js/sqlite": "^2",
+    "@sap/ams-dev": "^2",
+    "@sap/cds-dk": "^9",
+    "@types/node": "^22.0.0",
+    "tsx": "^4",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch:server": "cds watch --profile local-multitenancy",
+    "watch:sidecar": "cds watch mtx/sidecar --profile local-multitenancy",
+    "start:router": "cds bind --exec -- npm start --prefix router --profile local-multitenancy",
+    "sleep:5": "sleep 5",
+    "sleep:10": "sleep 10",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar -f --retries 1"
+  },
+  "private": true,
+  "imports": {
+    "#cds-models/*": "./@cds-models/*/index.js"
+  },
+  "cds": {
+    "typer": {
+      "build_tasks": [
+        {
+          "src": ".",
+          "dest": "@cds-models"
+        }
+      ]
+    },
+    "requires": {
+      "[production]": {
+        "auth": "ias",
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": ":memory:"
+          },
+          "impl": "@cap-js/sqlite"
+        }
+      }
+    },
+    "build": {
+      "tasks": [
+        {
+          "for": "nodejs",
+          "src": "srv"
+        },
+        {
+          "for": "mtx-sidecar",
+          "src": "mtx/sidecar"
+        },
+        {
+          "for": "ams",
+          "src": "srv"
+        }
+      ]
+    }
+  }
+}

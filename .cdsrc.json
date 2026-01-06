@@ -1,0 +1,35 @@
+{
+    "profile": "with-mtx-sidecar",
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+      "[local-multitenancy]": {
+      "multitenancy": true,
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "alice": {
+            "id": "alice@company.com",
+            "tenant": "t1",
+            "roles": ["ProjectManager", "cds.Subscriber", "internal-user"]
+          }
+        }
+      },
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        },
+        "schema_evolution": "auto"
+      }
+    },
+      "[production]": {
+      "auth": "xsuaa",
+      "db": "hana",
+      "multitenancy": true,
+      "destinations": true,
+      "html5-repo": true
+    }
+    }
+  }

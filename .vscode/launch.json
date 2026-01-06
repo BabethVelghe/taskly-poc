@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "[CAP] POC (Local)",
+      "configurations": [
+        "[CAP] Watch Sidecar (Local)",
+        "[CAP] Watch Server (Local)",
+        "[CAP] Watch Router (Local)"
+      ],
+      "dependsOrder": "sequence",
+      "presentation": {
+        "hidden": false,
+        "group": "Start",
+        "order": 1
+      }
+    }
+  ],
+  "configurations": [
+    {
+      "name": "[CAP] Watch Sidecar (Local)",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}",
+      "command": "npm run watch:sidecar"
+    },
+    {
+      "name": "[CAP] Watch Server (Local)",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}",
+      "command": "npm run sleep:5 && npm run watch:server"
+    },
+    {
+      "name": "[CAP] Watch Router (Local)",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}",
+      "command": "npm run sleep:10 && npm run start:router"
+    }
+  ],
+  "inputs": []
+}

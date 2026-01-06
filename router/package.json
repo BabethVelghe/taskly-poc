@@ -1,0 +1,12 @@
+{
+  "name": "flexso-taskly-app-approuter",
+  "version": "0.0.1",
+  "description": "Flexso taskly - AppRouter",
+  "dependencies": {
+    "@sap/approuter": "^20.0.0",
+    "@sap/xssec": "^4"
+  },
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js"
+  }
+}

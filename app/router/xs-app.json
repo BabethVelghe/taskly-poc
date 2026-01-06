@@ -1,0 +1,37 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "sessionTimeout": 30,
+  "routes": [
+    {
+      "source": "^/-/cds/.*",
+      "destination": "mtx-api",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/admin/(.*)$",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/public/(.*)$",
+      "destination": "srv-api",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/mtx/(.*)$",
+      "destination": "mtx-api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/(.*)$",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa"
+    }
+  ],
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/"
+  }
+}

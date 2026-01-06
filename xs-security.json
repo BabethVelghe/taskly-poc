@@ -1,0 +1,86 @@
+{
+  "xsappname": "taskly-poc",
+  "tenant-mode": "shared",
+  "description": "Security descriptor for TaskMaster multitenant application",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.ProjectManager",
+      "description": "Project Manager with full access"
+    },
+    {
+      "name": "$XSAPPNAME.ProjectViewer",
+      "description": "Project Viewer with read-only access"
+    },
+    {
+      "name": "$XSAPPNAME.TaskAssignee",
+      "description": "Task Assignee with read and update access to tasks"
+    },
+    {
+      "name": "$XSAPPNAME.mtcallback",
+      "description": "Multi Tenancy Callback Access",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    },
+    {
+      "name": "$XSAPPNAME.mtdeployment",
+      "description": "Scope to trigger a re-deployment of the database artifacts"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "ProjectManager",
+      "description": "Project Manager Role",
+      "scope-references": [
+        "$XSAPPNAME.ProjectManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ProjectViewer",
+      "description": "Project Viewer Role",
+      "scope-references": [
+        "$XSAPPNAME.ProjectViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "TaskAssignee",
+      "description": "Task Assignee Role",
+      "scope-references": [
+        "$XSAPPNAME.TaskAssignee"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "TaskMaster_ProjectManager",
+      "description": "Project Manager with full access to all operations",
+      "role-template-references": [
+        "$XSAPPNAME.ProjectManager"
+      ]
+    },
+    {
+      "name": "TaskMaster_ProjectViewer",
+      "description": "Project Viewer with read-only access",
+      "role-template-references": [
+        "$XSAPPNAME.ProjectViewer"
+      ]
+    },
+    {
+      "name": "TaskMaster_TaskAssignee",
+      "description": "Task Assignee with task update access",
+      "role-template-references": [
+        "$XSAPPNAME.TaskAssignee"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://*.cfapps.*.hana.ondemand.com/**",
+      "https://*.applicationstudio.cloud.sap/**"
+    ]
+  }
+}
