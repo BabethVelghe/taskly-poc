@@ -5,9 +5,9 @@
   "dependencies": {
     "@sap/cds": "^9",
     "@sap/cds-mtxs": "^3",
+    "@cap-js/hana": "^2",
     "@sap/xssec": "^4",
-    "express": "^4", 
-      "@cap-js/sqlite": "^2.0.3"
+    "express": "^4"
   },
   "devDependencies": {
     "@sap/cds-dk": "^9"
@@ -23,12 +23,8 @@
     "requires": {
       "[production]": {
         "auth": "ias",
-          "db": {
-          "kind": "sqlite",
-          "credentials": {
-            "url": ":memory:"
-          },
-          "impl": "@cap-js/sqlite"
+        "db": {
+          "kind": "hana"
         }      
       },
       "destinations": true,

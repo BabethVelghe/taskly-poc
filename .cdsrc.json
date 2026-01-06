@@ -38,11 +38,7 @@
     "[production]": {
       "auth": "ias",
       "db": {
-        "kind": "sqlite",
-        "credentials": {
-          "url": ":memory:"
-        },
-        "impl": "@cap-js/sqlite"
+        "kind": "hana"
       },
       "destinations": true,
       "html5-repo": true,
